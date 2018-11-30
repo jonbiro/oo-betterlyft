@@ -14,16 +14,20 @@ class Passenger
 
 
   def rides
-    a_ride.map {|ride|ride}
+    Ride.all.select do |ride|
+      ride.passenger == self#.map {|ride|ride}
+    end
   end
 
   def drivers
-    a_ride.map {|driver|driver}
+    rides.map {|ride|ride.driver}.uniq
   end
 
   def total_distance
-    a_ride.map { |ride| ride.distance }.inject(0){|sum,distance| sum + distance }
-
+    Ride.all.select do |ride|
+      ride.passenger == self
+    end.inject(0){|sum,ride| sum + ride.distance }
+#.map { |ride| ride.distance }
   end
 
   def self.premium_members
